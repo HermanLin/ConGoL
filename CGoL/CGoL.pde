@@ -35,6 +35,8 @@ void draw() {
   for (int i = 0; i < width; i += 5) { 
     for (int j = 0; j < height; j += 5) { 
       cells[i][j].render();
+      cells[i][j].checkAround();
+      cells[i][j].liveOrDie();
     }
   }
   //noLoop()
