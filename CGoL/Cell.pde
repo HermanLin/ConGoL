@@ -9,8 +9,8 @@ class Cell {
 
   Cell(int xCoor, int yCoor, CGoL game) {
     durr = game;
-    x = xCoor;
-    y = yCoor;
+    x = xCoor * 5;
+    y = yCoor * 5;
     life = false;
 
     cell = createShape(RECT, x, y, 5, 5);
@@ -21,14 +21,96 @@ class Cell {
 
   int countNeighbors() {
     int ret = 0;
-    if ((life) && (durr.cells[x - 1][y - 1].life)) ret ++;
-    if ((life) && (durr.cells[x][y - 1].life)) ret ++;
-    if ((life) && (durr.cells[x + 1][y - 1].life)) ret ++;
-    if ((life) && (durr.cells[x + 1][y].life)) ret ++;
-    if ((life) && (durr.cells[x + 1][y + 1].life)) ret ++;
-    if ((life) && (durr.cells[x][y + 1].life)) ret ++;
-    if ((life) && (durr.cells[x - 1][y + 1].life)) ret ++;
-    if ((life) && (durr.cells[x - 1][y].life)) ret ++;
+    int xVal = (x + 5) / 5 - 1;
+    int yVal = (y + 5) / 5 - 1;
+    /*
+    //case 1: the corner
+     if (xVal == 0 && yVal == 0) {
+     if ((life) && (durr.cells[xVal + 1][yVal].life)) ret ++;
+     if ((life) && (durr.cells[xVal][yVal + 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal + 1][yVal + 1].life)) ret ++;
+     } else if (xVal == width/5 && yVal == 0) {
+     if ((life) && (durr.cells[xVal][yVal + 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal - 1][yVal + 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal - 1][yVal].life)) ret ++;
+     } else if (xVal == 0 && yVal == height/5) {
+     if ((life) && (durr.cells[xVal][yVal - 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal + 1][yVal - 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal + 1][yVal].life)) ret ++;
+     } else if (xVal == width/5 && yVal == height/5) {
+     if ((life) && (durr.cells[xVal - 1][yVal].life)) ret ++;
+     if ((life) && (durr.cells[xVal - 1][yVal - 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal][yVal - 1].life)) ret ++;
+     }
+     //case 2: on the edge
+     else if (xVal == 0) {
+     if ((life) && (durr.cells[xVal][yVal - 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal + 1][yVal - 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal + 1][yVal].life)) ret ++;
+     if ((life) && (durr.cells[xVal + 1][yVal + 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal][yVal + 1].life)) ret ++;
+     } else if (xVal == width/5) {
+     if ((life) && (durr.cells[xVal - 1][yVal - 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal][yVal - 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal + 1][yVal - 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal + 1][yVal].life)) ret ++;
+     if ((life) && (durr.cells[xVal - 1][yVal].life)) ret ++;
+     } else if (yVal == 0) {
+     if ((life) && (durr.cells[xVal + 1][yVal].life)) ret ++;
+     if ((life) && (durr.cells[xVal + 1][yVal + 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal][yVal + 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal - 1][yVal + 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal - 1][yVal].life)) ret ++;
+     } else if (yVal == height/5) {
+     if ((life) && (durr.cells[xVal][yVal + 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal - 1][yVal + 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal - 1][yVal].life)) ret ++;
+     if ((life) && (durr.cells[xVal - 1][yVal - 1].life)) ret ++;
+     if ((life) && (durr.cells[xVal][yVal - 1].life)) ret ++;
+     }
+     */
+    //case 3: within the borders
+    try {
+      if ((durr.cells[xVal - 1][yVal - 1].life)) ret ++;
+    }
+    catch (Exception e) {
+    }
+    try {
+      if ((durr.cells[xVal][yVal - 1].life)) ret ++;
+    }
+    catch (Exception e) {
+    }
+    try {
+      if ((durr.cells[xVal + 1][yVal - 1].life)) ret ++;
+    }
+    catch (Exception e) {
+    }
+    try {
+      if ((durr.cells[xVal + 1][yVal].life)) ret ++;
+    }
+    catch (Exception e) {
+    }
+    try {
+      if ((durr.cells[xVal + 1][yVal + 1].life)) ret ++;
+    }
+    catch (Exception e) {
+    }
+    try {
+      if ((durr.cells[xVal][yVal + 1].life)) ret ++;
+    }
+    catch (Exception e) {
+    }
+    try {
+      if ((durr.cells[xVal - 1][yVal + 1].life)) ret ++;
+    }
+    catch (Exception e) {
+    }
+    try {
+      if ((durr.cells[xVal - 1][yVal].life)) ret ++;
+    }
+    catch (Exception e) {
+    }
+
     return ret;
   }
 
@@ -46,7 +128,7 @@ class Cell {
   void liveOrDie() {
     if (life) {
       cell.setFill(0);
-    } else if (!life){
+    } else if (!life) {
       cell.setFill(255);
     }
   }
