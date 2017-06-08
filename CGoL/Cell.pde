@@ -2,7 +2,7 @@ class Cell {
 
   int x;
   int y;
-  boolean life;
+  int life;
 
   PShape cell;
   CGoL durr;
@@ -11,7 +11,7 @@ class Cell {
     durr = game;
     x = xCoor * 5;
     y = yCoor * 5;
-    life = false;
+    life = 0;
 
     cell = createShape(RECT, x, y, 5, 5);
     beginShape();
@@ -23,90 +23,44 @@ class Cell {
     int ret = 0;
     int xVal = (x + 5) / 5 - 1;
     int yVal = (y + 5) / 5 - 1;
-    /*
-    //case 1: the corner
-     if (xVal == 0 && yVal == 0) {
-     if ((life) && (durr.cells[xVal + 1][yVal].life)) ret ++;
-     if ((life) && (durr.cells[xVal][yVal + 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal + 1][yVal + 1].life)) ret ++;
-     } else if (xVal == width/5 && yVal == 0) {
-     if ((life) && (durr.cells[xVal][yVal + 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal - 1][yVal + 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal - 1][yVal].life)) ret ++;
-     } else if (xVal == 0 && yVal == height/5) {
-     if ((life) && (durr.cells[xVal][yVal - 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal + 1][yVal - 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal + 1][yVal].life)) ret ++;
-     } else if (xVal == width/5 && yVal == height/5) {
-     if ((life) && (durr.cells[xVal - 1][yVal].life)) ret ++;
-     if ((life) && (durr.cells[xVal - 1][yVal - 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal][yVal - 1].life)) ret ++;
-     }
-     //case 2: on the edge
-     else if (xVal == 0) {
-     if ((life) && (durr.cells[xVal][yVal - 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal + 1][yVal - 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal + 1][yVal].life)) ret ++;
-     if ((life) && (durr.cells[xVal + 1][yVal + 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal][yVal + 1].life)) ret ++;
-     } else if (xVal == width/5) {
-     if ((life) && (durr.cells[xVal - 1][yVal - 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal][yVal - 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal + 1][yVal - 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal + 1][yVal].life)) ret ++;
-     if ((life) && (durr.cells[xVal - 1][yVal].life)) ret ++;
-     } else if (yVal == 0) {
-     if ((life) && (durr.cells[xVal + 1][yVal].life)) ret ++;
-     if ((life) && (durr.cells[xVal + 1][yVal + 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal][yVal + 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal - 1][yVal + 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal - 1][yVal].life)) ret ++;
-     } else if (yVal == height/5) {
-     if ((life) && (durr.cells[xVal][yVal + 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal - 1][yVal + 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal - 1][yVal].life)) ret ++;
-     if ((life) && (durr.cells[xVal - 1][yVal - 1].life)) ret ++;
-     if ((life) && (durr.cells[xVal][yVal - 1].life)) ret ++;
-     }
-     */
-    //case 3: within the borders
+
     try {
-      if ((durr.cells[xVal - 1][yVal - 1].life)) ret ++;
+      if ((durr.cells[xVal - 1][yVal - 1].life == 1)) ret ++;
     }
     catch (Exception e) {
     }
     try {
-      if ((durr.cells[xVal][yVal - 1].life)) ret ++;
+      if ((durr.cells[xVal][yVal - 1].life == 1)) ret ++;
     }
     catch (Exception e) {
     }
     try {
-      if ((durr.cells[xVal + 1][yVal - 1].life)) ret ++;
+      if ((durr.cells[xVal + 1][yVal - 1].life == 1)) ret ++;
     }
     catch (Exception e) {
     }
     try {
-      if ((durr.cells[xVal + 1][yVal].life)) ret ++;
+      if ((durr.cells[xVal + 1][yVal].life == 1)) ret ++;
     }
     catch (Exception e) {
     }
     try {
-      if ((durr.cells[xVal + 1][yVal + 1].life)) ret ++;
+      if ((durr.cells[xVal + 1][yVal + 1].life == 1)) ret ++;
     }
     catch (Exception e) {
     }
     try {
-      if ((durr.cells[xVal][yVal + 1].life)) ret ++;
+      if ((durr.cells[xVal][yVal + 1].life == 1)) ret ++;
     }
     catch (Exception e) {
     }
     try {
-      if ((durr.cells[xVal - 1][yVal + 1].life)) ret ++;
+      if ((durr.cells[xVal - 1][yVal + 1].life == 1)) ret ++;
     }
     catch (Exception e) {
     }
     try {
-      if ((durr.cells[xVal - 1][yVal].life)) ret ++;
+      if ((durr.cells[xVal - 1][yVal].life == 1)) ret ++;
     }
     catch (Exception e) {
     }
@@ -116,19 +70,18 @@ class Cell {
 
   void checkAround() {
     //Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
-    if ((life) && (countNeighbors() < 2)) life = false;
-    //Any live cell with two or three live neighbours lives on to the next generation.
-    if ((life) && (countNeighbors() == 2 || countNeighbors() == 3)) life = true;
     //Any live cell with more than three live neighbours dies, as if by overpopulation.
-    if ((life) && (countNeighbors() > 3)) life = false; 
+    if ((life == 1) && (countNeighbors() < 2 || countNeighbors() > 3)) life = 0;
+    //Any live cell with two or three live neighbours lives on to the next generation.
+    if ((life == 1) && (countNeighbors() == 2 || countNeighbors() == 3)) life = 1;    
     //Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-    if ((!life) && (countNeighbors() == 3)) life = true;
+    if ((life == 0) && (countNeighbors() == 3)) life = 1;
   }
 
   void liveOrDie() {
-    if (life) {
+    if (life == 1) {
       cell.setFill(0);
-    } else if (!life) {
+    } else if (life == 0) {
       cell.setFill(255);
     }
   }
