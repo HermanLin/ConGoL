@@ -3,14 +3,18 @@ int[][] cells;
 boolean pause;
 int life;
 
-int cellSize = 5;
+
+//Animation Variables
+int cellSize = 15;
+int framerate = 5;
 
 //setup
 void setup() {
   //screen setup;
-  size(800, 600);
+  size(1200, 700);
+  
   background(0);
-  frameRate(24);
+  frameRate(framerate);
   pause = true;
 
   //create grid lines
@@ -23,10 +27,27 @@ void setup() {
 }
 
 void draw() {
-  //if not paused
+  if (pause) fill(color(255, 0, 0));
+  else fill(255);
+  textSize(25);
+  text("Pause", 20, 20);
+
   if (!pause) {
     deadOrAlive();
     changeStates();
+  }
+
+  //mouse interaction
+}
+
+void mouseClicked() {
+  if (pause) {
+
+    int _x = mouseX/cellSize;
+    int _y = mouseY/cellSize;
+
+    cells[_x][_y] = cells[_x][_y] == 1 ? 0 : 1;
+    renderCell(_x, _y, cells[_x][_y]);
   }
 }
 
@@ -57,7 +78,8 @@ void clearWorld() {
 //color cell based on life state
 void renderCell(int x, int y, int status) {
   if (status == 1) {
-    fill(255);
+    fill(63, 255, 51);
+    //fill(255);
     rect(x * cellSize, y * cellSize, cellSize - 1, cellSize - 1);
   } else {
     fill(0);
@@ -120,6 +142,6 @@ void keyPressed() {
   if (key == ' ') pause = !pause;
   if (key == 'c' || key == 'C') { 
     clearWorld();
-    if (pause == true) pause = false;
+    if (pause == false) pause = true;
   }
 }
