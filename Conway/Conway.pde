@@ -1,5 +1,3 @@
-import java.util.*;
-
 //variables
 int[][] cells;
 boolean pause;
@@ -10,10 +8,10 @@ int cellSize = 5;
 //setup
 void setup() {
   //screen setup;
-  size(1000, 800);
+  size(800, 600);
   background(0);
   frameRate(24);
-  pause = false;
+  pause = true;
 
   //create grid lines
   stroke(48);
